@@ -5,10 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Dawn Machina empowers small and mid-sized manufacturers with OT cybersecurity planning that’s vendor-ready and non-disruptive. Grounded in Purdue 2.0 and IEC 62443." />
     <title>Dawn Machina | OT Cybersecurity Blueprinting</title>
-    <!-- Load Tailwind CSS from CDN - This is what gives us all the cool styles! -->
+    <!-- Load Tailwind CSS from CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- We no longer need styles.css, as Tailwind replaces it. -->
-    <!-- <link rel="stylesheet" href="styles.css" /> -->
+    <!-- Custom Tailwind configuration to define brand colors from your logo -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dawn-blue': '#0A192F',   /* Deeper, almost blackish blue from your logo */
+                        'dawn-pink': '#A34A6A',   /* More sophisticated, deeper pink from your logo */
+                        'dawn-yellow': '#F0B429', /* Your original accent yellow */
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         /* Custom font for a slightly nicer look */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
@@ -19,121 +31,289 @@
         html {
             scroll-behavior: smooth;
         }
+        /* Styles for the accordion content to allow smooth transition */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+        }
+        .accordion-content.active {
+            max-height: 1000px; /* A large enough value to accommodate content */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        /* Rotate arrow icon */
+        .accordion-header svg {
+            transition: transform 0.3s ease-out;
+        }
+        .accordion-header.active svg {
+            transform: rotate(180deg);
+        }
+        /* Watermark background for Hero Section */
+        #hero {
+            background-image: url('/assets/logo.jpg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 80%; /* Adjust size as needed, e.g., 'contain' or a percentage */
+            position: relative; /* Needed for z-index to place content above watermark */
+            overflow: hidden; /* Ensures watermark doesn't spill out */
+        }
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(10, 25, 47, 0.9); /* Dark overlay matching dawn-blue */
+            z-index: 1; /* Puts the overlay above the image but below content */
+        }
+        #hero > div {
+            position: relative; /* Puts content above the overlay */
+            z-index: 2;
+        }
+        /* Adjust hero text color for better contrast on the darker background */
+        #hero h1, #hero p, #hero a {
+            color: white; /* Ensure text is white for contrast */
+        }
     </style>
 </head>
 <body class="font-sans bg-gray-50 text-gray-800 leading-relaxed">
-    <!-- HEADER - bg-blue-800 for primary color, text-white for text, py-6 for vertical padding -->
-    <header class="bg-blue-800 text-white py-6 px-4 sm:px-6 lg:px-8">
-        <!-- Container for content, max-width to keep it centered, mx-auto for auto margins -->
-        <!-- flex for layout, flex-col on small screens, sm:flex-row on larger, justify-between for spacing -->
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center">
-            <!-- Logo - h-16 for height, w-auto for aspect ratio, rounded-lg for rounded corners, mb-4 for margin-bottom on small screens -->
-            <img src="/assets/logo.png" alt="Dawn Machina Logo" class="h-16 w-auto rounded-lg mb-4 sm:mb-0" />
-            <!-- Navigation - mt-4 for top margin on small screens, sm:mt-0 on larger -->
+    <!-- HEADER - Using a gradient background for a more dynamic look, and a shadow for depth -->
+    <header class="bg-gradient-to-r from-dawn-blue to-blue-700 text-white py-4 px-4 sm:px-6 lg:px-8 shadow-lg">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between">
+            <img src="/assets/logo.jpg" alt="Dawn Machina Logo" class="h-16 w-auto mb-4 sm:mb-0 flex-shrink-0" />
             <nav class="mt-4 sm:mt-0">
-                <!-- List of links - flex for horizontal layout, space-x-4 for horizontal spacing between items -->
-                <ul class="flex space-x-4 sm:space-x-6">
-                    <li><a href="#about" class="text-white hover:text-yellow-400 font-semibold px-3 py-2 rounded-md transition-colors duration-200">About</a></li>
-                    <li><a href="#product" class="text-white hover:text-yellow-400 font-semibold px-3 py-2 rounded-md transition-colors duration-200">Product</a></li>
-                    <li><a href="#modules" class="text-white hover:text-yellow-400 font-semibold px-3 py-2 rounded-md transition-colors duration-200">Modules</a></li>
-                    <li><a href="#impact" class="text-white hover:text-yellow-400 font-semibold px-3 py-2 rounded-md transition-colors duration-200">Impact</a></li>
-                    <li><a href="#contact" class="text-white hover:text-yellow-400 font-semibold px-3 py-2 rounded-md transition-colors duration-200">Contact</a></li>
+                <ul class="flex flex-wrap justify-center sm:justify-end space-x-4 sm:space-x-6">
+                    <li><a href="#about" class="text-white hover:text-dawn-yellow font-semibold px-3 py-2 rounded-md transition-colors duration-200">About</a></li>
+                    <li><a href="#product" class="text-white hover:text-dawn-yellow font-semibold px-3 py-2 rounded-md transition-colors duration-200">Product</a></li>
+                    <li><a href="#modules" class="text-white hover:text-dawn-yellow font-semibold px-3 py-2 rounded-md transition-colors duration-200">Modules</a></li>
+                    <li><a href="#impact" class="text-white hover:text-dawn-yellow font-semibold px-3 py-2 rounded-md transition-colors duration-200">Impact</a></li>
+                    <li><a href="#contact" class="text-white hover:text-dawn-yellow font-semibold px-3 py-2 rounded-md transition-colors duration-200">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- HERO SECTION - bg-blue-800 for background, text-white, py-20 for large padding, text-center for alignment -->
-    <section id="hero" class="bg-blue-800 text-white py-20 px-4 sm:px-6 lg:px-8 text-center">
+    <!-- HERO SECTION - Now with watermark background -->
+    <section id="hero" class="bg-dawn-blue text-white py-20 px-4 sm:px-6 lg:px-8 text-center">
         <div class="max-w-4xl mx-auto">
-            <!-- Heading - text-4xl (large) sm:text-5xl (larger on medium screens), font-extrabold for bold, mb-4 for margin-bottom -->
             <h1 class="text-4xl sm:text-5xl font-extrabold mb-4">Modern Cybersecurity Starts with Smart Planning</h1>
-            <!-- Paragraph - text-lg (larger text), sm:text-xl (even larger), mb-8 for margin-bottom, max-w-2xl for width -->
             <p class="text-lg sm:text-xl mb-8 max-w-2xl mx-auto">We help Ontario's manufacturers become integration-ready for secure modernization — without disrupting operations.</p>
-            <!-- CTA Button - inline-block for proper padding, bg-yellow-500 for accent color, text-blue-900 for contrast -->
-            <!-- py-3 px-8 for padding, rounded-full for pill shape, shadow-lg for depth, hover:scale-105 for subtle animation -->
-            <a href="#contact" class="inline-block bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">Schedule a Discovery Call</a>
+            <a href="#contact" class="inline-block bg-dawn-pink hover:bg-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">Schedule a Discovery Call</a>
         </div>
     </section>
 
-    <!-- ABOUT SECTION - General section styling: py-16 for padding, max-w-7xl for width, mx-auto for center -->
-    <!-- bg-white, shadow-sm, rounded-lg, mb-8 for a card-like appearance -->
+    <!-- ABOUT SECTION -->
     <section id="about" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-white shadow-sm rounded-lg mb-8">
-        <!-- Heading - text-3xl sm:text-4xl, font-bold, text-blue-800, mb-6 for margin-bottom, text-center -->
-        <h2 class="text-3xl sm:text-4xl font-bold text-blue-800 mb-6 text-center">About Dawn Machina</h2>
+        <h2 class="text-3xl sm:text-4xl font-bold text-dawn-blue mb-6 text-center">About Dawn Machina</h2>
         <p class="text-lg text-gray-700 leading-relaxed">Dawn Machina is a Brantford-based cybersecurity company focused on supporting Ontario's advanced manufacturing and smart infrastructure sectors. Our flagship product, <strong>DawnTrust™</strong>, is a structured planning engagement that helps organizations map cyber risk, align to standards like IEC 62443, and prepare for secure technology adoption — without requiring invasive tools or heavy integration.</p>
     </section>
 
     <!-- PRODUCT SECTION -->
     <section id="product" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-white shadow-sm rounded-lg mb-8">
-        <h2 class="text-3xl sm:text-4xl font-bold text-blue-800 mb-6 text-center">What is DawnTrust™?</h2>
+        <h2 class="text-3xl sm:text-4xl font-bold text-dawn-blue mb-6 text-center">What is DawnTrust™?</h2>
         <p class="text-lg text-gray-700 leading-relaxed mb-8">A 5-module planning product designed to prepare OT environments for secure modernization — including vendor integration, risk clarity, and funding readiness. Delivered as a fixed-scope engagement, not a tool or consulting service.</p>
 
-        <!-- Benefits List - list-none to remove default bullets, p-0, space-y-3 for vertical spacing -->
         <ul class="list-none p-0 space-y-3 text-lg text-gray-700">
-            <!-- List Item - flex for icon and text alignment, items-center for vertical center, gap-x-2 for spacing -->
             <li class="flex items-center gap-x-2">
-                <span class="text-green-500 text-2xl">✅</span> Vendor-ready integration maps
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map text-dawn-pink flex-shrink-0"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" x2="9" y1="3" y2="18"></line><line x1="15" x2="15" y1="6" y2="21"></line></svg>
+                Vendor-ready integration maps
             </li>
             <li class="flex items-center gap-x-2">
-                <span class="text-green-500 text-2xl">✅</span> Trust zone and risk discovery
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid text-dawn-pink flex-shrink-0"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+                Trust zone and risk discovery (Purdue 2.0)
             </li>
             <li class="flex items-center gap-x-2">
-                <span class="text-green-500 text-2xl">✅</span> Standards alignment (Purdue 2.0, IEC 62443)
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scale text-dawn-pink flex-shrink-0"><path d="m16 16 3-3a1 1 0 0 0 0-1.42l-4-4a1 1 0 0 0-1.42 0L9 11a1 1 0 0 0 0 1.42l4 4a1 1 0 0 0 1.42 0l.58-.58a1 1 0 0 0 0-1.42l-2.82-2.82a1 1 0 0 0-1.42 0L8 12"></path><path d="M12 3v18"></path><path d="M10 3h4"></path><path d="M7 21h10"></path></svg>
+                Standards alignment (IEC 62443 & NIST)
             </li>
             <li class="flex items-center gap-x-2">
-                <span class="text-green-500 text-2xl">✅</span> Visual executive deliverables
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-monitor text-dawn-pink flex-shrink-0"><rect width="20" height="14" x="2" y="3" rx="2"></rect><path d="M12 17v4"></path><path d="M8 21h8"></path></svg>
+                Visual executive deliverables
             </li>
             <li class="flex items-center gap-x-2">
-                <span class="text-green-500 text-2xl">✅</span> Grant-friendly procurement overlays
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign text-dawn-pink flex-shrink-0"><line x1="12" x2="12" y1="2" y2="22"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                Grant-friendly procurement overlays
             </li>
         </ul>
     </section>
 
-    <!-- MODULES SECTION -->
+    <!-- MODULES SECTION - Now with interactive accordion functionality -->
     <section id="modules" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-white shadow-sm rounded-lg mb-8">
-        <h2 class="text-3xl sm:text-4xl font-bold text-blue-800 mb-6 text-center">Five-Part Delivery Framework</h2>
-        <!-- Ordered List - list-decimal for numbered list, list-inside for numbers inside content, space-y-3 for spacing -->
-        <ol class="list-decimal list-inside space-y-3 text-lg text-gray-700">
-            <li><strong>Module 1:</strong> OT Risk Discovery & Trust Mapping</li>
-            <li><strong>Module 2:</strong> Standards Overlay & Gap Review</li>
-            <li><strong>Module 3:</strong> Vendor-Aligned Integration Strategy</li>
-            <li><strong>Module 4:</strong> Phased Roadmap & Investment Timing</li>
-            <li><strong>Module 5:</strong> Executive Enablement Toolkit</li>
-        </ol>
+        <h2 class="text-3xl sm:text-4xl font-bold text-dawn-blue mb-6 text-center">Five-Part Delivery Framework</h2>
+
+        <div class="space-y-4">
+            <!-- Module 1 -->
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-gray-100 hover:bg-gray-200 transition-colors duration-200" onclick="toggleAccordion(this)">
+                    <h3 class="text-xl font-semibold text-dawn-blue">Module 1: OT Risk Discovery & Trust Mapping</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-gray-600"><path d="m6 9 6 6 6-6"></path></svg>
+                </div>
+                <div class="accordion-content px-4 bg-white text-gray-700">
+                    <p class="text-base text-gray-600 mt-1">We begin by thoroughly mapping your Operational Technology (OT) environment, identifying critical assets, and defining trust zones. This foundational step is **grounded in the principles of Purdue 2.0**, providing a clear, hierarchical view of your industrial control systems and their interconnections to pinpoint cyber risks effectively.</p>
+                    <h4 class="font-semibold text-dawn-blue mt-4 mb-2">Includes:</h4>
+                    <ul class="list-disc list-inside text-sm space-y-1">
+                        <li>Purdue Model 2.0–based zone & conduit map</li>
+                        <li>Asset and user trust boundary worksheet</li>
+                        <li>Identity & access heatmap (IAM/PAM focus)</li>
+                        <li>Legacy IIoT device risk scoring</li>
+                        <li>OEM-native controls prompt — identifies features like FactoryTalk Security, TIA Portal access profiles, etc.</li>
+                        <li>Optional: Remote access risk snapshot</li>
+                    </ul>
+                    <h4 class="font-semibold text-dawn-blue mt-4 mb-2">Outcome:</h4>
+                    <p class="text-sm text-gray-600">A visual trust map and risk inventory that reflects real operational structure, not just idealized theory.</p>
+                    <h4 class="font-semibold text-dawn-blue mt-4 mb-2">Client Effort:</h4>
+                    <p class="text-sm text-gray-600">Light — based on guided intake and conversation, no deep tech lift needed.</p>
+                </div>
+            </div>
+
+            <!-- Module 2 -->
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-gray-100 hover:bg-gray-200 transition-colors duration-200" onclick="toggleAccordion(this)">
+                    <h3 class="text-xl font-semibold text-dawn-blue">Module 2: Standards Overlay & Gap Review</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-gray-600"><path d="m6 9 6 6 6-6"></path></svg>
+                </div>
+                <div class="accordion-content px-4 bg-white text-gray-700">
+                    <p class="text-base text-gray-600 mt-1">This module overlays your current OT security posture against leading global standards. We conduct a comprehensive gap analysis using frameworks such as **IEC 62443** for industrial automation and control systems, and **NIST SP 800** for broader organizational risk management. This identifies specific areas for improvement and compliance.</p>
+                    <h4 class="font-semibold text-dawn-blue mt-4 mb-2">Includes:</h4>
+                    <ul class="list-disc list-inside text-sm space-y-1">
+                        <li>IEC 62443 and NIST SP 800-82 quick-reference mapping</li>
+                        <li>Foundational requirement checklist mapped to client site</li>
+                        <li>OEM-native capabilities matrix — shows where equipment vendors already implement secure-by-default options</li>
+                        <li>Legacy system alignment recommendations</li>
+                        <li>Compensating control strategies</li>
+                    </ul>
+                    <h4 class="font-semibold text-dawn-blue mt-4 mb-2">Outcome:</h4>
+                    <p class="text-sm text-gray-600">A gap snapshot that makes compliance feel attainable, even in legacy-heavy environments.</p>
+                    <h4 class="font-semibold text-dawn-blue mt-4 mb-2">Client Effort:</h4>
+                    <p class="text-sm text-gray-600">Minimal — you review and validate. Dawn Machina does the alignment work.</p>
+                </div>
+            </div>
+
+            <!-- Module 3 -->
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-gray-100 hover:bg-gray-200 transition-colors duration-200" onclick="toggleAccordion(this)">
+                    <h3 class="text-xl font-semibold text-dawn-blue">Module 3: Technology Integration Blueprint</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-gray-600"><path d="m6 9 6 6 6-6"></path></svg>
+                </div>
+                <div class="accordion-content px-4 bg-white text-gray-700">
+                    <p class="text-base text-gray-600 mt-1">Help clients align their OT environment with both existing vendor-native capabilities and future-ready cybersecurity tools — all mapped to zones and trust boundaries they can actually implement.</p>
+                    <h4 class="font-semibold text-dawn-blue mt-4 mb-2">This module includes:</h4>
+                    <ul class="list-disc list-inside text-sm space-y-1">
+                        <li>Logical architecture diagrams adapted to client-specific OT layouts</li>
+                        <li>Zones & conduits mapped to existing OEM ecosystems (e.g., Rockwell, Siemens, ABB)</li>
+                        <li>Overlay of native security features (e.g., FactoryTalk Security, Siemens TIA Portal protections, ABB System 800xA)</li>
+                        <li>Vendor-neutral comparison of future security options, including:
+                            <ul class="list-circle list-inside ml-4 mt-1 space-y-1">
+                                <li>Network visibility platforms (Dragos, Claroty)</li>
+                                <li>Unidirectional gateways (Waterfall Security)</li>
+                                <li>Autonomous response and threat detection (Darktrace, Nozomi)</li>
+                            </ul>
+                        </li>
+                        <li>Procurement-aligned architecture planning: how to evaluate and onboard new equipment with segmentation and identity protections in mind</li>
+                        <li>A role-based access control (RBAC) matrix to tie technologies back to plant operations and stakeholder needs (Role-based access control design)</li>
+                    </ul>
+                    <h4 class="font-semibold text-dawn-blue mt-4 mb-2">Outcome:</h4>
+                    <p class="text-sm text-gray-600">Clients walk away with a clear integration strategy that respects their current environment, identifies security features they may already own, and guides future investment in a secure, standards-aligned direction — without locking them into any single vendor path.</p>
+                    <h4 class="font-semibold text-dawn-blue mt-4 mb-2">Client Effort Level:</h4>
+                    <p class="text-sm text-gray-600">Low to moderate. Clients provide basic environment context (e.g., key vendors, plant layout), and you tailor overlays and procurement notes accordingly.</p>
+                </div>
+            </div>
+
+            <!-- Module 4 -->
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-gray-100 hover:bg-gray-200 transition-colors duration-200" onclick="toggleAccordion(this)">
+                    <h3 class="text-xl font-semibold text-dawn-blue">Module 4: 3-Phase Roadmap + Cost Tiers</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-gray-600"><path d="m6 9 6 6 6-6"></path></svg>
+                </div>
+                <div class="accordion-content px-4 bg-white text-gray-700">
+                    <p class="text-base text-gray-600 mt-1">Break the path forward into clear phases — incorporating existing tools, planned upgrades, and realistic budgets.</p>
+                    <h4 class="font-semibold text-dawn-blue mt-4 mb-2">Includes:</h4>
+                    <ul class="list-disc list-inside text-sm space-y-1">
+                        <li>Three-phase security roadmap:
+                            <ul class="list-circle list-inside ml-4 mt-1 space-y-1">
+                                <li>Stabilize: Use existing vendor-native tools more effectively</li>
+                                <li>Strengthen: Introduce segmentation, identity controls, and procurement guidance</li>
+                                <li>Scale: Add centralized visibility, vendor tooling, and support for multi-site alignment</li>
+                            </ul>
+                        </li>
+                        <li>Budget brackets: $, $$, $$$</li>
+                        <li>Execution KPIs and vendor-readiness checklist</li>
+                        <li>Future equipment upgrade planner (helps clients time security alongside planned capital improvements)</li>
+                    </ul>
+                    <h4 class="font-semibold text-dawn-blue mt-4 mb-2">Outcome:</h4>
+                    <p class="text-sm text-gray-600">A phased, secure modernization plan — grounded in budget and operations, not theory.</p>
+                    <h4 class="font-semibold text-dawn-blue mt-4 mb-2">Client Effort:</h4>
+                    <p class="text-sm text-gray-600">Medium — they collaborate on phase prioritization, but don’t need deep technical prep.</p>
+                </div>
+            </div>
+
+            <!-- Module 5 -->
+            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                <div class="accordion-header flex justify-between items-center p-4 cursor-pointer bg-gray-100 hover:bg-gray-200 transition-colors duration-200" onclick="toggleAccordion(this)">
+                    <h3 class="text-xl font-semibold text-dawn-blue">Module 5: Client Enablement Kit</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down text-gray-600"><path d="m6 9 6 6 6-6"></path></svg>
+                </div>
+                <div class="accordion-content px-4 bg-white text-gray-700">
+                    <p class="text-base text-gray-600 mt-1">Give internal champions the tools to get buy-in and act — even if they’re not cyber experts.</p>
+                    <h4 class="font-semibold text-dawn-blue mt-4 mb-2">Includes:</h4>
+                    <ul class="list-disc list-inside text-sm space-y-1">
+                        <li>Executive summary slide for owners/boards</li>
+                        <li>Procurement-ready security language for RFPs and equipment evaluation</li>
+                        <li>Vendor-neutral partner intro briefing template</li>
+                        <li>Internal “why now” presentation</li>
+                        <li>Optional: Branded one-pager and Loom-style walkthrough video</li>
+                    </ul>
+                    <h4 class="font-semibold text-dawn-blue mt-4 mb-2">Outcome:</h4>
+                    <p class="text-sm text-gray-600">A fully equipped client team that’s empowered to act, ask better questions, and defend their decisions internally.</p>
+                    <h4 class="font-semibold text-dawn-blue mt-4 mb-2">Client Effort:</h4>
+                    <p class="text-sm text-gray-600">Low — materials are plug-and-play, with light customization.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- IMPACT SECTION -->
     <section id="impact" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-white shadow-sm rounded-lg mb-8">
-        <h2 class="text-3xl sm:text-4xl font-bold text-blue-800 mb-6 text-center">Why It Matters</h2>
-        <!-- Unordered List - list-none, p-0, space-y-4 for spacing -->
+        <h2 class="text-3xl sm:text-4xl font-bold text-dawn-blue mb-6 text-center">Why It Matters</h2>
         <ul class="list-none p-0 space-y-4 text-lg">
-            <!-- List Item - bg-blue-50 for light background, p-4 for padding, rounded-lg, shadow-sm -->
             <li class="bg-blue-50 p-4 rounded-lg shadow-sm">
-                <strong class="text-blue-800 block mb-1">For Manufacturers:</strong> Achieve visibility, secure funding, and plan securely without disruption
+                <strong class="text-dawn-blue block mb-1">For Manufacturers:</strong> Achieve visibility, secure funding, and plan securely without disruption
             </li>
             <li class="bg-blue-50 p-4 rounded-lg shadow-sm">
-                <strong class="text-blue-800 block mb-1">For Vendors:</strong> Faster onboarding and alignment to site readiness
+                <strong class="text-dawn-blue block mb-1">For Vendors:</strong> Faster onboarding and alignment to site readiness
             </li>
             <li class="bg-blue-50 p-4 rounded-lg shadow-sm">
-                <strong class="text-blue-800 block mb-1">For Funders:</strong> Roadmaps aligned to real risk and real standards — not guesswork
+                <strong class="text-dawn-blue block mb-1">For Funders:</strong> Roadmaps aligned to real risk and real standards — not guesswork
             </li>
         </ul>
     </section>
 
     <!-- CONTACT SECTION -->
     <section id="contact" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-white shadow-sm rounded-lg mb-8 text-center">
-        <h2 class="text-3xl sm:text-4xl font-bold text-blue-800 mb-6">Let’s Talk</h2>
+        <h2 class="text-3xl sm:text-4xl font-bold text-dawn-blue mb-6">Let’s Talk</h2>
         <p class="text-lg text-gray-700 leading-relaxed mb-8">Book a discovery call or reach out to discuss pilot opportunities and partnership options.</p>
-        <!-- CTA Button - same styling as Hero button, but text-white since it's on a lighter background now -->
-        <a href="mailto:juveria@dawnmachina.com" class="inline-block bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">Contact Us</a>
+        <a href="mailto:juveria@dawnmachina.com" class="inline-block bg-dawn-pink hover:bg-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">Contact Us</a>
     </section>
 
-    <!-- FOOTER - bg-gray-800 for dark background, text-gray-300 for light text, py-6 for padding, text-sm for smaller text -->
+    <!-- FOOTER -->
     <footer class="bg-gray-800 text-gray-300 py-6 text-center text-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p>&copy; 2025 Dawn Machina Inc. | Brantford, Ontario</p>
         </div>
     </footer>
+
+    <script>
+        // JavaScript function to toggle the accordion content
+        function toggleAccordion(header) {
+            // Get the content div that is a sibling of the header's parent
+            const content = header.nextElementSibling;
+            // Toggle the 'active' class on the content div
+            content.classList.toggle('active');
+            // Toggle the 'active' class on the header itself to rotate the arrow
+            header.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>
